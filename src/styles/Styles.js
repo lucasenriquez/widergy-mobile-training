@@ -24,5 +24,37 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         margin: 8
+    },
+    historyContainer: {
+        flex: 1,
+        justifyContent: 'space-between'
+    },
+    historyText: {
+        alignSelf: 'flex-start',
+        fontSize: 25
+    },
+    history: {
+        borderBottomColor: '#9e9e9e',
+        borderBottomWidth: 1,
+        width: '100%'
+    },
+    buttonsContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        bottom: 10
+    },
+    clearButton: {
+        backgroundColor: '#ff6666',
+        borderRadius: 50
+    },
+    homeButton: {
+        backgroundColor: '#7198fc',
+        borderRadius: 50
+    },
+    btnText: {
+        textAlign: 'center',
+        fontSize: 20,
+        padding: 20
     }
 })

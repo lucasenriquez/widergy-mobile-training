@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { BUTTONS, getResult, OPERATORS, addSymbolToNbr } from '../helpers/CalculatorHelper';
+import { BUTTONS, getResult, OPERATORS, HISTORY } from '../helpers/CalculatorHelper';
 import { View, Text } from 'react-native';
 import { styles } from '../styles/Styles'
 import MyButton from './MyButton';
 
-const Calculator = () => {
+const Calculator = ({ navigation }) => {
   const [input, setInput] = useState(0);
   const [firstValue, setFirstValue] = useState('');
   const [operation, setOperation] = useState();
@@ -14,7 +14,6 @@ const Calculator = () => {
   const handleOnPress = (btnValue) => {
     result == 'Syntax Error' ? clear() : null
     if (btnValue == '⌫') {
-      console.log(input, firstValue, operation);
       if (input == '' && firstValue == '' ){
         return clear();
       } else if (input != '') {
@@ -38,8 +37,8 @@ const Calculator = () => {
         clear();
       }
     }
-    if (btnValue == '+/-' && input) {
-      return setInput(addSymbolToNbr(input))
+    if (btnValue == 'HIST') {
+      return navigation.navigate('History');
     }
     if (btnValue == '%') {
       return firstValue ? setInput(parseFloat(input) / 100) : setFirstValue(parseFloat(input) / 100)
@@ -50,7 +49,9 @@ const Calculator = () => {
         setResult(result)
         setInput('');
         setOperation();
-        return setLastOperation(`${firstValue}${operation}${input}`)
+        let lastOp = `${firstValue}${operation}${input}`
+        HISTORY.push(lastOp + '=' + result)
+        return setLastOperation(lastOp)
       } else {
         setResult(input)
         return setOperation('')
@@ -68,6 +69,8 @@ const Calculator = () => {
         return setInput('')
       } else if (operation && firstValue && input){
         let actualResult = getResult(operation, firstValue, input);
+        let lastOp = `${firstValue}${operation}${input}`
+        HISTORY.push(lastOp + '=' + actualResult)
         setResult(actualResult)
         setFirstValue(actualResult)
         setOperation(btnValue)
