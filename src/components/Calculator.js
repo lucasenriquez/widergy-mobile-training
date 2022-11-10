@@ -14,8 +14,22 @@ const Calculator = () => {
   const handleOnPress = (btnValue) => {
     result == 'Syntax Error' ? clear() : null
     if (btnValue == '⌫') {
-      return setInput(parseInt(input.toString().slice(0, - 1)))
-    }
+      console.log(input, firstValue, operation);
+      if (input == '' && firstValue == '' ){
+        return clear();
+      } else if (input != '') {
+        let newInput = input.toString().length > 1 ? parseInt(input.toString().slice(0, - 1)) : ''
+        return setInput(newInput)
+      } else if (input == '' && operation) {
+        return setOperation();
+      } else if (firstValue != '') {
+        let newFirstValue = firstValue.toString().length > 1 ? parseInt(firstValue.toString().slice(0, - 1)) : ''
+        setFirstValue('')
+        return setInput(newFirstValue)
+      } else {
+        return clear();
+      }
+    } 
     if (lastOperation) {
       if (OPERATORS.includes(btnValue)) {
         setLastOperation();
@@ -36,10 +50,10 @@ const Calculator = () => {
         setResult(result)
         setInput('');
         setOperation();
-        setLastOperation(`${firstValue}${operation}${input}`)
+        return setLastOperation(`${firstValue}${operation}${input}`)
       } else {
         setResult(input)
-        setOperation('')
+        return setOperation('')
       }
     }
     else if (btnValue == 'C') {
@@ -48,28 +62,34 @@ const Calculator = () => {
       if (input && operation == undefined) {
         setFirstValue(input)
         setInput('');
-        setOperation(btnValue)
+        return setOperation(btnValue)
       } else if (firstValue && !operation) {
         setOperation(btnValue);
-        setInput('')
+        return setInput('')
+      } else if (operation && firstValue && input){
+        let actualResult = getResult(operation, firstValue, input);
+        setResult(actualResult)
+        setFirstValue(actualResult)
+        setOperation(btnValue)
+        return setInput('');
       }
     } else if (input <= 0) {
-      setInput(btnValue)
+      return setInput(btnValue)
     } else if (firstValue) {
-      console.log('asdasd');
-      setInput(`${input}${btnValue}`)
+      return setInput(`${input}${btnValue}`)
     } else if (input > 0 && operation == undefined) {
-      setInput(`${input}${btnValue}`)
+      return setInput(`${input}${btnValue}`)
     } else if (operation != undefined) {
       setFirstValue(input)
-      setInput(btnValue)
+      return setInput(btnValue)
     }
+    return null;
   };
 
   const clear = () => {
     setInput('');
     setOperation();
-    setFirstValue();
+    setFirstValue('');
     setLastOperation();
     setResult();
   }
