@@ -1,79 +1,13 @@
-import React, { useState } from 'react';
-import { BUTTONS, getResult, OPERATORS, NUMBERS } from '../../helpers/Constants';
-import { View, Text } from 'react-native';
-import { styles } from './styles'
-import MyButton from '../../components/MyButton';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import LoadingSpinner from '../../components/LoadingSpinner'
+import Calculator from '../../components/Calculator';
 
 const HomeScreen = ({ navigation }) => {
-  const dispatch = useDispatch();
-  const historyArray = useSelector(state => state.history)
-  const [input, setInput] = useState('');
-  const [result, setResult] = useState();
-
-  const handleOnPress = (btnValue) => {
-    btnValue = btnValue == '÷' ? '/' : btnValue == 'x' ? '*' : btnValue
-    if (['HIST', 'SAVE'].includes(btnValue)) {
-      return handleHistory(btnValue)
-    }
-    setResult()
-    if (btnValue == '=') {
-      let res = getResult(input)
-      return setResult(res)
-    } else {
-      if (OPERATORS.includes(btnValue) && OPERATORS.includes(input.slice(-1))) {
-        return null;
-      } else if (btnValue == 'C') {
-        return clear();
-      } else if (OPERATORS.includes(btnValue) && input.length == 0) {
-        return null;
-      } if (btnValue == '⌫') {
-        return setInput(input.substr(0, input.length - 1))
-      } else if (result && NUMBERS.includes(btnValue)) {
-        return setInput(btnValue)
-      }
-      return setInput(input + btnValue)
-    }
-  }
-
-  const clear = () => {
-    setInput('');
-    setResult();
-  }
-
-  const handleHistory = (btnValue) => {
-    if (btnValue == 'HIST') {
-      return navigation.navigate('History')
-    } else if (result == undefined) {
-      return null;
-    }
-    return dispatch({ type: '@@HISTORY/SAVE_EXPRESSION', id: setExpressionID(), value: `${input}=${result}` })
-  }
-
-  const setExpressionID = () => {
-    return historyArray.length ? historyArray.slice(-1)[0].id + 1 : 1
-  }
+  const loading = useSelector(state => state.loading);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.input}>
-        <Text style={styles.text} key='input'>{input}</Text>
-        <Text style={styles.text} key='result'>{result}</Text>
-      </View>
-      <View>
-        {BUTTONS.map(btnArr => {
-          return (
-            <View style={styles.btnRows} key={btnArr}>
-              {btnArr.map((btnValue) => {
-                return (
-                  <MyButton title={btnValue} key={btnValue} input={input} onPress={() => handleOnPress(btnValue)} />
-                )
-              })}
-            </View>
-          )
-        })}
-      </View>
-    </View>
+    loading ? <LoadingSpinner/>  : <Calculator navigation={navigation}/>
   )
 }
 

@@ -1,3 +1,6 @@
+if (__DEV__) {
+  import('./ReactotronConfig').then(() => console.log('Reactotron Configured'));
+}
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -15,6 +18,8 @@ import { Provider } from 'react-redux';
 import Store from './redux/store';
 
 const Stack = createNativeStackNavigator();
+
+
 
 const App = () => {
   return (
