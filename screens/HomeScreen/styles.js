@@ -23,7 +23,8 @@ export const styles = StyleSheet.create({
     },
     btnRows: {
         maxWidth: '100%',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: 'center'
     },
     button: {
         width: 80,

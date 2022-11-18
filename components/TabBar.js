@@ -1,10 +1,10 @@
 import React from "react";
 import { Alert, View, TouchableOpacity, Text } from "react-native";
 import { styles } from "../screens/HistoryScreen/styles";
-import { actionCreators } from "../redux/history/actions";
-import { useDispatch } from "react-redux";
+import { actionCreators } from "../redux/forms/actions";
+import { useDispatch, useSelector } from "react-redux";
 
-const TabBar = ({ navigation }) => {
+const TabBar = ({ navigation, values }) => {
     const dispatch = useDispatch();
     const showAlert = () => {
         Alert.alert('Clear History', 'Are you sure?',
@@ -25,23 +25,33 @@ const TabBar = ({ navigation }) => {
             }
         );
     }
+    const handleOnPress = (value) => {
+        switch (value) {
+            case 'CLEAR':
+                return showAlert();
+            case 'HISTORY':
+                return navigation.navigate('History')
+            case 'HOME':
+                return navigation.navigate('Home')
+            case 'POLL':
+                return navigation.navigate('Poll')
+                break;
+        }
+    }
 
     const clearHistory = () => {
         dispatch(actionCreators.clearHistory())
     }
-    
+
     return (
         <View style={styles.buttonsContainer}>
-            <TouchableOpacity style={styles.homeButton} onPress={() => navigation.navigate('Home')}>
-                <Text style={styles.btnText}>
-                    HOME
-                </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.clearButton} onPress={() => showAlert('CLEAR')}>
-                <Text style={styles.btnText}>
-                    CLEAR
-                </Text>
-            </TouchableOpacity>
+            {values.map(value => {
+                return (
+                    <TouchableOpacity key={value} style={value == 'CLEAR' ? styles.clearButton : styles.homeButton} onPress={() => handleOnPress(value)}>
+                        <Text style={styles.btnText}>{value}</Text>
+                    </TouchableOpacity>
+                )
+            })}
         </View>
     )
 };

@@ -10,7 +10,7 @@ const Expression = ({ id }) => {
     const [input, setInput] = useState('');
     const [editingId, setEditingId] = useState(''); 
     const dispatch = useDispatch();
-    const historyArray = useSelector(state => state.history);
+    const historyArray = useSelector(state => state.history.history);
     const operation = historyArray.filter(operation => operation.id === id)[0]
 
     const deleteExpression = (id) => {
