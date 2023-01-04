@@ -4,7 +4,7 @@ import { ScrollView } from "react-native";
 import Expression from "./Expression";
 
 const HistoryList = () => {
-    const historyArray = useSelector(state => state.history)
+    const historyArray = useSelector(state => state.history.history)
 
     return (
         <ScrollView scrollEnabled={true}>

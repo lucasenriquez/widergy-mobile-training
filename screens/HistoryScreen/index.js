@@ -7,11 +7,11 @@ import HistoryList from '../../components/HistoryList';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 const HistoryScreen = ({ navigation }) => {
-    const loading = useSelector(state => state.loading)
+    const loading = useSelector(state => state.history.loading)
     return (
         <SafeAreaView style={styles.historyContainer}>
             {loading ? <LoadingSpinner/> : <HistoryList/>}
-            {!loading ? <TabBar navigation={navigation}/> : null}
+            {!loading ? <TabBar navigation={navigation} values={['HOME', 'CLEAR']}/> : null}
         </SafeAreaView>
     )
 }

@@ -16,6 +16,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
 import Store from './redux/store';
+import PollScreen from './screens/PollsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,7 @@ const App = () => {
       <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false}}>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="History" component={HistoryScreen} />
+        <Stack.Screen name="Poll" component={PollScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>

@@ -6,11 +6,12 @@ import { styles } from "../screens/HomeScreen/styles";
 import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { actionCreators } from "../redux/history/actions";
+import TabBar from "./TabBar";
 
 const Calculator = ({ navigation }) => {
   const [input, setInput] = useState('');
   const [result, setResult] = useState();
-  const historyArray = useSelector(state => state.history);
+  const historyArray = useSelector(state => state.history.history);
   const dispatch = useDispatch();
 
   const handleOnPress = (btnValue) => {
@@ -74,6 +75,7 @@ const Calculator = ({ navigation }) => {
           </View>
         )
       })}
+      <TabBar navigation={navigation} values={['HISTORY', 'POLL']}/> 
     </SafeAreaView>
   )
 }
