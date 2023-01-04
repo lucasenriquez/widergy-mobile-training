@@ -4,7 +4,10 @@ export const styles = StyleSheet.create({
     container:{
         position: 'absolute',
         bottom: 10,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        maxHeight: '99%',
+        display: 'flex',
+        flexDirection: 'column'
     },
     text: {
         fontSize: 60,
@@ -13,16 +16,23 @@ export const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         margin: 10
     },
+    input:{
+        maxHeight: '100%',
+        borderBottomColor: 'gray',
+        borderBottomWidth: 1
+    },
     btnRows: {
         maxWidth: '100%',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: 'center'
     },
     button: {
         width: 80,
         height: 80,
-        borderRadius: 50,
+        borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        margin: 8
+        margin: 8,
+        backgroundColor: 'white'
     }
 })
