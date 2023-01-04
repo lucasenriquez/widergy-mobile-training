@@ -1,3 +1,6 @@
+if (__DEV__) {
+  import('./ReactotronConfig').then(() => console.log('Reactotron Configured'));
+}
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -7,21 +10,29 @@
  */
 
 import React from 'react';
-import Calculator from './src/components/Calculator';
-import History from './src/components/History';
+import HomeScreen from './screens/HomeScreen';
+import HistoryScreen from './screens/HistoryScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Provider } from 'react-redux';
+import Store from './redux/store';
+import PollScreen from './screens/PollsScreen';
 
 const Stack = createNativeStackNavigator();
 
+
+
 const App = () => {
   return (
+    <Provider store={Store}>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={Calculator} />
-        <Stack.Screen name="History" component={History} />
+      <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false}}>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="History" component={HistoryScreen} />
+        <Stack.Screen name="Poll" component={PollScreen} />
       </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
   )
 };
 
